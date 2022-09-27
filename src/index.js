@@ -9,9 +9,10 @@ const ref = {
     searchForm: document.querySelector('.search-form'),
     gallery: document.querySelector('.gallery'),
     loadMoreBtn: document.querySelector('.load-more'),
-    btSearch: document.querySelector('.search-btn'),                //*Доступ к кнопке отправки
+    btSearch: document.querySelector('.search-form-button'),                //*Доступ к кнопке отправки
     searchInput:document.querySelector('input[name="searchQuery"]') //*Доступ к поля инпута
 }
+
 
 let searchQuery = '';
 let currentHits = 0;
@@ -22,12 +23,15 @@ ref.searchForm.addEventListener('submit', onSearch);
 ref.loadMoreBtn.addEventListener('click', onloadMoreBtn);
 
 //*Функция на блокировки кнопки отправки когда поле пустое
-const checkLength = function (e) {
-  if (ref.searchInput != ''){
-    ref.btSearch.removeAttribute('disabled')
+ref.btSearch.setAttribute('disabled', true);
+ref.searchInput.oninput = function () {
+  if (ref.searchInput.value.length === 0) {
+    ref.btSearch.setAttribute('disabled', true); 
+  }
+  else {
+    ref.btSearch.removeAttribute('disabled');
   }
 }
-ref.searchInput.addEventListener('keyup', checkLength);
 //*
 let lightbox = new SimpleLightbox('.photo-card a', {
   captions: true,
